@@ -4,97 +4,94 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
 -- Notification function
-local function onMessage(message)
+local onMessage = function(message)  
     game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "Bakmix",
+        Title = "Notification",
         Text = message,
-        Duration = 5,
-        Icon = "rbxassetid://1500x1500logo" -- Replace with your logo asset ID
+        Duration = 10,
+        Icon = "rbxassetid://120191430745933"
     })
 end
 
 -- Create main GUI
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "BakmixKeySystem"
+ScreenGui.Name = "KeySystemGUI"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
--- Main container with modern design
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 350, 0, 300) -- Adjusted height
-MainFrame.Position = UDim2.new(0.5, -175, 0.5, -150)
+MainFrame.Size = UDim2.new(0, 350, 0, 320)
+MainFrame.Position = UDim2.new(0.5, -175, 0.5, -160)
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MainFrame.BorderSizePixel = 0
 MainFrame.ClipsDescendants = true
 
 local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 10)
+Corner.CornerRadius = UDim.new(0, 6)
 Corner.Parent = MainFrame
 
--- Top bar with logo
 local TopBar = Instance.new("Frame")
 TopBar.Name = "TopBar"
-TopBar.Size = UDim2.new(1, 0, 0, 40)
-TopBar.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+TopBar.Size = UDim2.new(1, 0, 0, 30)
+TopBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 TopBar.BorderSizePixel = 0
-
-local TopBarCorner = Instance.new("UICorner")
-TopBarCorner.CornerRadius = UDim.new(0, 10)
-TopBarCorner.Parent = TopBar
-
--- Logo (replace with your asset ID)
-local Logo = Instance.new("ImageLabel")
-Logo.Name = "Logo"
-Logo.Size = UDim2.new(0, 30, 0, 30)
-Logo.Position = UDim2.new(0, 10, 0.5, -15)
-Logo.BackgroundTransparency = 1
-Logo.Image = "rbxassetid://1500x1500logo" -- Your logo asset ID
-Logo.ScaleType = Enum.ScaleType.Fit
 
 local Title = Instance.new("TextLabel")
 Title.Name = "Title"
-Title.Size = UDim2.new(1, -100, 1, 0)
-Title.Position = UDim2.new(0, 50, 0, 0)
+Title.Size = UDim2.new(1, -60, 1, 0)
+Title.Position = UDim2.new(0, 10, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "KEY STATUS"
+Title.Text = "Key Status"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 16
+Title.Font = Enum.Font.Gotham
+Title.TextSize = 14
 
-local CloseButton = Instance.new("ImageButton")
+local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
-CloseButton.Position = UDim2.new(1, -40, 0.5, -15)
-CloseButton.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 CloseButton.BorderSizePixel = 0
-CloseButton.Image = "rbxassetid://closeicon" -- Replace with your close icon asset ID
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.TextSize = 14
 
 local CloseButtonCorner = Instance.new("UICorner")
-CloseButtonCorner.CornerRadius = UDim.new(1, 0)
 CloseButtonCorner.Parent = CloseButton
 
--- Key input section
-local KeyInputLabel = Instance.new("TextLabel")
-KeyInputLabel.Name = "KeyInputLabel"
-KeyInputLabel.Size = UDim2.new(1, -40, 0, 20)
-KeyInputLabel.Position = UDim2.new(0, 20, 0, 60)
-KeyInputLabel.BackgroundTransparency = 1
-KeyInputLabel.Text = "ENTER YOUR KEY"
-KeyInputLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-KeyInputLabel.TextXAlignment = Enum.TextXAlignment.Left
-KeyInputLabel.Font = Enum.Font.Gotham
-KeyInputLabel.TextSize = 12
+-- Logo
+local Logo = Instance.new("ImageLabel")
+Logo.Name = "Logo"
+Logo.Size = UDim2.new(0, 60, 0, 60)
+Logo.Position = UDim2.new(0.5, -30, 0, 35)
+Logo.BackgroundTransparency = 1
+Logo.Image = "rbxassetid://1500x1500" -- Replace with your logo asset ID
 
+-- Description text
+local Description = Instance.new("TextLabel")
+Description.Name = "Description"
+Description.Size = UDim2.new(1, -40, 0, 40)
+Description.Position = UDim2.new(0, 20, 0, 100)
+Description.BackgroundTransparency = 1
+Description.Text = "Check your premium key expiration date."
+Description.TextColor3 = Color3.fromRGB(200, 200, 200)
+Description.Font = Enum.Font.Gotham
+Description.TextSize = 14
+Description.TextWrapped = true
+Description.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Key input
 local KeyInput = Instance.new("TextBox")
 KeyInput.Name = "KeyInput"
-KeyInput.Size = UDim2.new(1, -40, 0, 40)
-KeyInput.Position = UDim2.new(0, 20, 0, 85)
-KeyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+KeyInput.Size = UDim2.new(1, -40, 0, 35)
+KeyInput.Position = UDim2.new(0, 20, 0, 150)
+KeyInput.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 KeyInput.BorderSizePixel = 0
-KeyInput.PlaceholderText = "Paste your key here..."
+KeyInput.PlaceholderText = "Enter your key."
 KeyInput.Text = ""
 KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInput.Font = Enum.Font.Gotham
@@ -102,121 +99,145 @@ KeyInput.TextSize = 14
 KeyInput.ClearTextOnFocus = false
 
 local KeyInputCorner = Instance.new("UICorner")
-KeyInputCorner.CornerRadius = UDim.new(0, 6)
+KeyInputCorner.CornerRadius = UDim.new(0, 4)
 KeyInputCorner.Parent = KeyInput
 
--- Get Key button with icon
-local GetKeyButton = Instance.new("ImageButton")
-GetKeyButton.Name = "GetKeyButton"
-GetKeyButton.Size = UDim2.new(1, -40, 0, 40)
-GetKeyButton.Position = UDim2.new(0, 20, 0, 140)
-GetKeyButton.BackgroundColor3 = Color3.fromRGB(255, 180, 0) -- Yellow
-GetKeyButton.BorderSizePixel = 0
-GetKeyButton.Image = "rbxassetid://getkeyicon" -- Replace with your icon asset ID
-GetKeyButton.ScaleType = Enum.ScaleType.Fit
+-- Checkbox container
+local CheckboxContainer = Instance.new("Frame")
+CheckboxContainer.Name = "CheckboxContainer"
+CheckboxContainer.Size = UDim2.new(1, -40, 0, 70)
+CheckboxContainer.Position = UDim2.new(0, 20, 0, 195)
+CheckboxContainer.BackgroundTransparency = 1
+
+-- Get Key checkbox
+local GetKeyFrame = Instance.new("Frame")
+GetKeyFrame.Name = "GetKeyFrame"
+GetKeyFrame.Size = UDim2.new(1, 0, 0, 25)
+GetKeyFrame.BackgroundTransparency = 1
+
+local GetKeyCheckbox = Instance.new("ImageButton")
+GetKeyCheckbox.Name = "GetKeyCheckbox"
+GetKeyCheckbox.Size = UDim2.new(0, 20, 0, 20)
+GetKeyCheckbox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+GetKeyCheckbox.Image = "rbxassetid://3570695787" -- Default checkbox image
+GetKeyCheckbox.ScaleType = Enum.ScaleType.Fit
+
+local GetKeyCheckboxCorner = Instance.new("UICorner")
+GetKeyCheckboxCorner.CornerRadius = UDim.new(0, 4)
+GetKeyCheckboxCorner.Parent = GetKeyCheckbox
 
 local GetKeyLabel = Instance.new("TextLabel")
 GetKeyLabel.Name = "GetKeyLabel"
-GetKeyLabel.Size = UDim2.new(1, -50, 1, 0)
-GetKeyLabel.Position = UDim2.new(0, 50, 0, 0)
+GetKeyLabel.Size = UDim2.new(1, -25, 1, 0)
+GetKeyLabel.Position = UDim2.new(0, 25, 0, 0)
 GetKeyLabel.BackgroundTransparency = 1
-GetKeyLabel.Text = "GET KEY"
-GetKeyLabel.TextColor3 = Color3.fromRGB(30, 30, 30)
-GetKeyLabel.TextXAlignment = Enum.TextXAlignment.Left
-GetKeyLabel.Font = Enum.Font.GothamBold
+GetKeyLabel.Text = "Get Key"
+GetKeyLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyLabel.Font = Enum.Font.Gotham
 GetKeyLabel.TextSize = 14
+GetKeyLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-local GetKeyButtonCorner = Instance.new("UICorner")
-GetKeyButtonCorner.CornerRadius = UDim.new(0, 6)
-GetKeyButtonCorner.Parent = GetKeyButton
+local GetKeyIcon = Instance.new("ImageLabel")
+GetKeyIcon.Name = "GetKeyIcon"
+GetKeyIcon.Size = UDim2.new(0, 18, 0, 18)
+GetKeyIcon.Position = UDim2.new(0, 0, 0.5, -9)
+GetKeyIcon.BackgroundTransparency = 1
+GetKeyIcon.Image = "rbxassetid://3570695787" -- Replace with your icon asset ID
 
--- Check Key button with icon
-local CheckKeyButton = Instance.new("ImageButton")
-CheckKeyButton.Name = "CheckKeyButton"
-CheckKeyButton.Size = UDim2.new(1, -40, 0, 40)
-CheckKeyButton.Position = UDim2.new(0, 20, 0, 190)
-CheckKeyButton.BackgroundColor3 = Color3.fromRGB(0, 180, 120) -- Green
-CheckKeyButton.BorderSizePixel = 0
-CheckKeyButton.Image = "rbxassetid://checkkeyicon" -- Replace with your icon asset ID
-CheckKeyButton.ScaleType = Enum.ScaleType.Fit
+GetKeyCheckbox.Parent = GetKeyFrame
+GetKeyLabel.Parent = GetKeyFrame
+GetKeyIcon.Parent = GetKeyFrame
+GetKeyFrame.Parent = CheckboxContainer
 
-local CheckKeyLabel = Instance.new("TextLabel")
-CheckKeyLabel.Name = "CheckKeyLabel"
-CheckKeyLabel.Size = UDim2.new(1, -50, 1, 0)
-CheckKeyLabel.Position = UDim2.new(0, 50, 0, 0)
-CheckKeyLabel.BackgroundTransparency = 1
-CheckKeyLabel.Text = "CHECK EXPIRY DATE"
-CheckKeyLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-CheckKeyLabel.TextXAlignment = Enum.TextXAlignment.Left
-CheckKeyLabel.Font = Enum.Font.GothamBold
-CheckKeyLabel.TextSize = 14
+-- Check Expiry Date checkbox
+local CheckExpiryFrame = Instance.new("Frame")
+CheckExpiryFrame.Name = "CheckExpiryFrame"
+CheckExpiryFrame.Size = UDim2.new(1, 0, 0, 25)
+CheckExpiryFrame.Position = UDim2.new(0, 0, 0, 30)
+CheckExpiryFrame.BackgroundTransparency = 1
 
-local CheckKeyButtonCorner = Instance.new("UICorner")
-CheckKeyButtonCorner.CornerRadius = UDim.new(0, 6)
-CheckKeyButtonCorner.Parent = CheckKeyButton
+local CheckExpiryCheckbox = Instance.new("ImageButton")
+CheckExpiryCheckbox.Name = "CheckExpiryCheckbox"
+CheckExpiryCheckbox.Size = UDim2.new(0, 20, 0, 20)
+CheckExpiryCheckbox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+CheckExpiryCheckbox.Image = "rbxassetid://3570695787" -- Default checkbox image
+CheckExpiryCheckbox.ScaleType = Enum.ScaleType.Fit
 
--- Info text
-local InfoText = Instance.new("TextLabel")
-InfoText.Name = "InfoText"
-InfoText.Size = UDim2.new(1, -40, 0, 20)
-InfoText.Position = UDim2.new(0, 20, 0, 240)
-InfoText.BackgroundTransparency = 1
-InfoText.Text = "Keys typically last 30 days"
-InfoText.TextColor3 = Color3.fromRGB(150, 150, 150)
-InfoText.TextXAlignment = Enum.TextXAlignment.Left
-InfoText.Font = Enum.Font.Gotham
-InfoText.TextSize = 12
+local CheckExpiryCheckboxCorner = Instance.new("UICorner")
+CheckExpiryCheckboxCorner.CornerRadius = UDim.new(0, 4)
+CheckExpiryCheckboxCorner.Parent = CheckExpiryCheckbox
 
--- Footer with social buttons
-local Footer = Instance.new("Frame")
-Footer.Name = "Footer"
-Footer.Size = UDim2.new(1, -40, 0, 40)
-Footer.Position = UDim2.new(0, 20, 1, -50)
-Footer.BackgroundTransparency = 1
+local CheckExpiryLabel = Instance.new("TextLabel")
+CheckExpiryLabel.Name = "CheckExpiryLabel"
+CheckExpiryLabel.Size = UDim2.new(1, -25, 1, 0)
+CheckExpiryLabel.Position = UDim2.new(0, 25, 0, 0)
+CheckExpiryLabel.BackgroundTransparency = 1
+CheckExpiryLabel.Text = "Check Expiry Date"
+CheckExpiryLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+CheckExpiryLabel.Font = Enum.Font.Gotham
+CheckExpiryLabel.TextSize = 14
+CheckExpiryLabel.TextXAlignment = Enum.TextXAlignment.Left
 
--- Website button
-local WebsiteButton = Instance.new("ImageButton")
-WebsiteButton.Name = "WebsiteButton"
-WebsiteButton.Size = UDim2.new(0, 35, 0, 35)
-WebsiteButton.Position = UDim2.new(0, 0, 0, 0)
-WebsiteButton.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-WebsiteButton.BorderSizePixel = 0
-WebsiteButton.Image = "rbxassetid://websiteicon" -- Replace with your icon asset ID
+local CheckExpiryIcon = Instance.new("ImageLabel")
+CheckExpiryIcon.Name = "CheckExpiryIcon"
+CheckExpiryIcon.Size = UDim2.new(0, 18, 0, 18)
+CheckExpiryIcon.Position = UDim2.new(0, 0, 0.5, -9)
+CheckExpiryIcon.BackgroundTransparency = 1
+CheckExpiryIcon.Image = "rbxassetid://3570695787" -- Replace with your icon asset ID
 
-local WebsiteButtonCorner = Instance.new("UICorner")
-WebsiteButtonCorner.CornerRadius = UDim.new(1, 0)
-WebsiteButtonCorner.Parent = WebsiteButton
+CheckExpiryCheckbox.Parent = CheckExpiryFrame
+CheckExpiryLabel.Parent = CheckExpiryFrame
+CheckExpiryIcon.Parent = CheckExpiryFrame
+CheckExpiryFrame.Parent = CheckboxContainer
+
+-- Footer text
+local FooterText = Instance.new("TextLabel")
+FooterText.Name = "FooterText"
+FooterText.Size = UDim2.new(1, -40, 0, 20)
+FooterText.Position = UDim2.new(0, 20, 0, 270)
+FooterText.BackgroundTransparency = 1
+FooterText.Text = "Keys typically last 30 days"
+FooterText.TextColor3 = Color3.fromRGB(150, 150, 150)
+FooterText.Font = Enum.Font.Gotham
+FooterText.TextSize = 12
+FooterText.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Social buttons container
+local SocialButtons = Instance.new("Frame")
+SocialButtons.Name = "SocialButtons"
+SocialButtons.Size = UDim2.new(1, -40, 0, 30)
+SocialButtons.Position = UDim2.new(0, 20, 0, 280)
+SocialButtons.BackgroundTransparency = 1
 
 -- Discord button
 local DiscordButton = Instance.new("ImageButton")
 DiscordButton.Name = "DiscordButton"
-DiscordButton.Size = UDim2.new(0, 35, 0, 35)
-DiscordButton.Position = UDim2.new(0, 45, 0, 0)
-DiscordButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242) -- Discord blue
-DiscordButton.BorderSizePixel = 0
-DiscordButton.Image = "rbxassetid://discordicon" -- Replace with your icon asset ID
+DiscordButton.Size = UDim2.new(0, 30, 0, 30)
+DiscordButton.Position = UDim2.new(0, 0, 0, 0)
+DiscordButton.BackgroundTransparency = 1
+DiscordButton.Image = "rbxassetid://discordicon" -- Replace with your Discord icon asset ID
 
-local DiscordButtonCorner = Instance.new("UICorner")
-DiscordButtonCorner.CornerRadius = UDim.new(1, 0)
-DiscordButtonCorner.Parent = DiscordButton
+-- Website button
+local WebsiteButton = Instance.new("ImageButton")
+WebsiteButton.Name = "WebsiteButton"
+WebsiteButton.Size = UDim2.new(0, 30, 0, 30)
+WebsiteButton.Position = UDim2.new(0, 40, 0, 0)
+WebsiteButton.BackgroundTransparency = 1
+WebsiteButton.Image = "rbxassetid://3570695787" -- Replace with your website icon asset ID
+
+DiscordButton.Parent = SocialButtons
+WebsiteButton.Parent = SocialButtons
 
 -- Assemble GUI
 TopBar.Parent = MainFrame
-Logo.Parent = TopBar
 Title.Parent = TopBar
 CloseButton.Parent = TopBar
-
-KeyInputLabel.Parent = MainFrame
+Logo.Parent = MainFrame
+Description.Parent = MainFrame
 KeyInput.Parent = MainFrame
-GetKeyButton.Parent = MainFrame
-GetKeyLabel.Parent = GetKeyButton
-CheckKeyButton.Parent = MainFrame
-CheckKeyLabel.Parent = CheckKeyButton
-InfoText.Parent = MainFrame
-Footer.Parent = MainFrame
-WebsiteButton.Parent = Footer
-DiscordButton.Parent = Footer
-
+CheckboxContainer.Parent = MainFrame
+FooterText.Parent = MainFrame
+SocialButtons.Parent = MainFrame
 MainFrame.Parent = ScreenGui
 ScreenGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
@@ -262,65 +283,24 @@ CloseButton.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
 end)
 
--- Button hover effects
-local function createHoverEffect(button)
-    local originalColor = button.BackgroundColor3
-    local hoverColor = Color3.new(
-        math.min(originalColor.R * 1.2, 1),
-        math.min(originalColor.G * 1.2, 1),
-        math.min(originalColor.B * 1.2, 1)
-    )
-    
-    button.MouseEnter:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = hoverColor}):Play()
-    end)
-    
-    button.MouseLeave:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = originalColor}):Play()
-    end)
+-- Checkbox functionality
+local function toggleCheckbox(checkbox)
+    local isChecked = checkbox.Image == "rbxassetid://3570695787" -- Default unchecked image
+    if isChecked then
+        checkbox.Image = "rbxassetid://3570695787" -- Replace with checked image asset ID
+    else
+        checkbox.Image = "rbxassetid://3570695787" -- Default unchecked image
+    end
 end
 
-createHoverEffect(GetKeyButton)
-createHoverEffect(CheckKeyButton)
-createHoverEffect(WebsiteButton)
-createHoverEffect(DiscordButton)
-
--- Button click effects
-local function createClickEffect(button)
-    button.MouseButton1Down:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.1), {Size = UDim2.new(button.Size.X.Scale, button.Size.X.Offset * 0.95, button.Size.Y.Scale, button.Size.Y.Offset * 0.95)}):Play()
-    end)
-    
-    button.MouseButton1Up:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.1), {Size = UDim2.new(button.Size.X.Scale, button.Size.X.Offset / 0.95, button.Size.Y.Scale, button.Size.Y.Offset / 0.95)}):Play()
-    end)
-end
-
-createClickEffect(GetKeyButton)
-createClickEffect(CheckKeyButton)
-createClickEffect(WebsiteButton)
-createClickEffect(DiscordButton)
-
--- Get Key button functionality
-GetKeyButton.MouseButton1Click:Connect(function()
-    setclipboard("https://bakmix.pro/key-system")
+GetKeyCheckbox.MouseButton1Click:Connect(function()
+    toggleCheckbox(GetKeyCheckbox)
+    setclipboard("https://bakmix.pro/key-sytem")
     onMessage("🌐 Key website copied to clipboard")
 end)
 
--- Website button functionality
-WebsiteButton.MouseButton1Click:Connect(function()
-    setclipboard("https://bakmix.pro")
-    onMessage("🌐 Website URL copied to clipboard")
-end)
-
--- Discord button functionality
-DiscordButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/bakmix")
-    onMessage("🌐 Discord link copied to clipboard")
-end)
-
--- Check Key button functionality
-CheckKeyButton.MouseButton1Click:Connect(function()
+CheckExpiryCheckbox.MouseButton1Click:Connect(function()
+    toggleCheckbox(CheckExpiryCheckbox)
     local key = KeyInput.Text:gsub("%s+", "")
     
     if key == "" then
@@ -329,7 +309,7 @@ CheckKeyButton.MouseButton1Click:Connect(function()
     end
     
     -- Create request URL
-    local url = "https://bakmix.pro/api/check-key?key=" .. HttpService:UrlEncode(key)
+    local url = "https://bakmix.pro/raw/callback?key=" .. HttpService:UrlEncode(key)
     
     local success, response = pcall(function()
         return game:HttpGet(url, true)
@@ -339,33 +319,7 @@ CheckKeyButton.MouseButton1Click:Connect(function()
         local data = HttpService:JSONDecode(response)
         if data.status == "success" then
             onMessage("✅ Key is valid!")
-            onMessage("⏳ Expires: " .. data.expiry_date)
-            
-            -- Set global variables
-            _G.Key = key
-            _G.PASSWORD = "bakmix2023"
-            
-            -- Load script if in supported place
-            local allowedPlaces = {
-                {placeId = 3678761576, scriptUrl = "https://bakmix.pro/scripts/ww1.lua"}
-            }
-            
-            local playerPlaceId = game.PlaceId
-            local scriptToLoad = nil
-            
-            for _, place in ipairs(allowedPlaces) do
-                if playerPlaceId == place.placeId then
-                    scriptToLoad = place.scriptUrl
-                    break
-                end
-            end
-            
-            if scriptToLoad then
-                loadstring(game:HttpGet(scriptToLoad))()
-                wait(1)
-                loadstring(game:HttpGet("https://bakmix.pro/scripts/webhook.lua"))()
-                ScreenGui:Destroy()
-            end
+            onMessage("⏳ Expires: " .. data.data.expires_at)
         else
             onMessage("❌ " .. (data.message or "Invalid key"))
         end
@@ -375,26 +329,27 @@ CheckKeyButton.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Social buttons functionality
+DiscordButton.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/9vWsKfRnQr")
+    onMessage("🌐 Discord link copied to clipboard")
+end)
+
+WebsiteButton.MouseButton1Click:Connect(function()
+    setclipboard("https://bakmix.pro")
+    onMessage("🌐 Website URL copied to clipboard")
+end)
+
 -- Make GUI responsive to different devices
 local function updateUIScale()
     local viewportSize = workspace.CurrentCamera.ViewportSize
     local isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
-    local scale = isMobile and math.min(1, math.min(viewportSize.X / 800, viewportSize.Y / 600)) 
-                 or math.min(1, math.min(viewportSize.X / 1920, viewportSize.Y / 1080) * 1.2)
+    local scale = isMobile and 1.2 or 1
     
-    MainFrame.Size = UDim2.new(0, 350 * scale, 0, 300 * scale)
-    MainFrame.Position = UDim2.new(0.5, -175 * scale, 0.5, -150 * scale)
-    
-    -- Adjust text sizes for mobile
-    if isMobile then
-        Title.TextSize = 14 * scale
-        KeyInputLabel.TextSize = 10 * scale
-        KeyInput.TextSize = 12 * scale
-        GetKeyLabel.TextSize = 12 * scale
-        CheckKeyLabel.TextSize = 12 * scale
-        InfoText.TextSize = 10 * scale
-    end
+    MainFrame.Size = UDim2.new(0, 350 * scale, 0, 320 * scale)
+    MainFrame.Position = UDim2.new(0.5, -175 * scale, 0.5, -160 * scale)
 end
 
 updateUIScale()
 workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(updateUIScale)
+UserInputService.TouchEnabled:Connect(updateUIScale)
